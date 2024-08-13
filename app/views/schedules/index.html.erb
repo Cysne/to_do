@@ -1,4 +1,35 @@
+<h1>Meus Cronogramas</h1>
+
+<%= link_to 'Novo Cronograma', new_schedule_path, class: 'btn btn-primary mb-2' %>
+
 <div id='calendar'></div>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Título</th>
+      <th>Descrição</th>
+      <th>Data de Início</th>
+      <th>Data de Término</th>
+      <th>Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @schedules.each do |schedule| %>
+      <tr>
+        <td><%= schedule&.title %></td>
+        <td><%= truncate(schedule&.description, length: 50) %></td>
+        <td><%= schedule&.start_date %></td>
+        <td><%= schedule&.end_date %></td>
+        <td>
+          <%= link_to 'Visualizar', schedule_path(schedule), class: 'btn btn-info' %>
+          <%= link_to 'Editar', edit_schedule_path(schedule), class: 'btn btn-warning' %>
+          <%= link_to 'Excluir', schedule_path(schedule), method: :delete, data: { confirm: 'Tem certeza?' }, class: 'btn btn-danger' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
 
 <script>
   $(document).ready(function() {
@@ -7,3 +38,15 @@
     });
   });
 </script>
+
+<% if flash[:notice] %>
+  <div class="alert alert-success">
+    <%= flash[:notice] %>
+  </div>
+<% end %>
+
+<% if flash[:alert] %>
+  <div class="alert alert-danger">
+    <%= flash[:alert] %>
+  </div>
+<% end %>
