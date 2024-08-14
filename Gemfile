@@ -47,6 +47,7 @@ gem 'bootsnap', require: false
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem 'debug', platforms: %i[mri windows]
+  gem 'dotenv-rails'
 end
 
 group :development do
@@ -73,3 +74,11 @@ gem 'bootstrap'
 gem 'sassc-rails'
 
 gem 'fullcalendar-rails'
+
+gem 'simple_form'
+
+gem 'acts_as_list'
+
+gem 'pgcrypto'
+
+gem 'pg'
