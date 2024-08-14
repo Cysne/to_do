@@ -1,0 +1,18 @@
+<h2>Tarefas</h2>
+<div class= 'container'>
+<%= simple_form_for([@schedule, @schedule.tasks.build]) do |form| %>
+  <div class="field">
+    <%= form.input :title, label: "Título", class: 'form-control' %>
+  </div>
+  <div class="field">
+    <%= form.input :description, label: "Descrição", class: 'form-control' %>
+  </div>
+  <div class="actions">
+    <%= form.button :submit, 'Adicionar Tarefa', class: 'form-control btn btn-primary' %>
+  </div>
+<div>
+<% end %>
+<ul data-controller="sortable">
+  <% @tasks.each do |task| %>
+    <li data-id="<%= task.id %>"><%= task.title %>: <%= task.description %></li>
+  <% end %>

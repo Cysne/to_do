@@ -1,0 +1,33 @@
+<%= simple_form_for @schedule, html: { local: true } do |form| %>
+  <% if @schedule.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@schedule.errors.count, "erro") %> impediram este cronograma de ser salvo:</h2>
+
+      <ul>
+        <% @schedule.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.input :title, label: "Título", class: 'form' %>
+  </div>
+
+  <div class="field">
+    <%= form.input :description, as: :text, label: "Descrição" %>
+  </div>
+
+  <div class="field">
+    <%= form.input :start_date, as: :datetime, label: "Data de Início" %>
+  </div>
+
+  <div class="field">
+    <%= form.input :end_date, as: :datetime, label: "Data de Término" %>
+  </div>
+
+  <div class="actions">
+    <%= form.button :submit %>
+  </div>
+<% end %>
