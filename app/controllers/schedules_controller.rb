@@ -1,4 +1,6 @@
 class SchedulesController < ApplicationController
+  before_action :authenticate_user!
+  before_action :set_schedule, only: %i[show edit update destroy]
   def index
     @schedules = Schedule.all
 
@@ -9,6 +11,7 @@ class SchedulesController < ApplicationController
   end
 
   def show
+    @tasks = @schedule&.tasks
   end
 
   def new
@@ -17,6 +20,7 @@ class SchedulesController < ApplicationController
 
   def create
     @schedule = Schedule.new(schedule_params)
+    @schedule.user_id = current_user.id
 
     if @schedule.save
       redirect_to schedules_path, notice: 'Cronograma criado com sucesso.'
@@ -25,14 +29,11 @@ class SchedulesController < ApplicationController
     end
   end
 
-  def edit
-  end
+  def edit; end
 
-  def update
-  end
+  def update; end
 
-  def destroy
-  end
+  def destroy; end
 
   private
 
