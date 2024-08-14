@@ -10,29 +10,35 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_08_13_131210) do
-  create_table "schedules", force: :cascade do |t|
+ActiveRecord::Schema[7.1].define(version: 2024_08_14_140137) do
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "pgcrypto"
+  enable_extension "plpgsql"
+
+  create_table "schedules", id: false, force: :cascade do |t|
     t.string "title"
     t.text "description"
     t.datetime "start_date"
     t.datetime "end_date"
-    t.integer "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_schedules_on_user_id"
+    t.uuid "id", default: -> { "gen_random_uuid()" }, null: false
+    t.uuid "user_id"
+    t.index ["id"], name: "index_schedules_on_id", unique: true
   end
 
-  create_table "tasks", force: :cascade do |t|
+  create_table "tasks", id: false, force: :cascade do |t|
     t.string "title"
     t.text "description"
     t.datetime "due_date"
-    t.integer "schedule_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["schedule_id"], name: "index_tasks_on_schedule_id"
+    t.integer "position"
+    t.uuid "id", default: -> { "gen_random_uuid()" }, null: false
+    t.uuid "schedule_id"
   end
 
-  create_table "users", force: :cascade do |t|
+  create_table "users", id: false, force: :cascade do |t|
     t.string "nome"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -41,7 +47,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_13_131210) do
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
+    t.uuid "id", default: -> { "gen_random_uuid()" }, null: false
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["id"], name: "index_users_on_id", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
